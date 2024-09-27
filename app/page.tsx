@@ -1,48 +1,22 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import List from "./components/itemList";
 import { Vehicle } from "@prisma/client";
+import SearchBar from "./components/searchBar";
 
 
 export default function Home() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [vehicleId, setVehicleId] = useState<number | "">("");
-  
-  
 
-  // fetch request to get all vehcicles
+  // fetch request to get all vehicles
   const getAllVehicles = async () => {
-	setVehicles([]);
-	setLoading(true);
+    setVehicles([]);
+    setLoading(true);
 
     try {
       const response = await fetch("/api/vehicles");
-      if (response.ok) {
-        const data: Vehicle[] = await response.json();
-        setVehicles(data);
-      } else {		
-        console.error("Failed to fetch vehicles:", response.statusText);
-      }
-    } catch (error) {
-      console.error("An error occurred while fetching vehicles:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-  useEffect(() => {
-    getAllVehicles();
-  }, []);
-  
-
-  const getVehicleById = async (id: number) => {
-	setVehicles([]);
-	setLoading(true);
-    try {
-      const response = await fetch(`/api/vehicles/${id}`);
       if (response.ok) {
         const data: Vehicle[] = await response.json();
         setVehicles(data);
@@ -56,17 +30,39 @@ export default function Home() {
     }
   };
 
+  // fetch request to get a vehicle by ID
+  const getVehicleById = async (id: number) => {
+    setVehicles([]);
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/vehicles/${id}`);
+      if (response.ok) {
+        const data: Vehicle = await response.json();
+        setVehicles([data]); // Make sure to pass an array with a single vehicle
+      } else {
+        console.error("Failed to fetch vehicle:", response.statusText);
+      }
+    } catch (error) {
+      console.error("An error occurred while fetching vehicle:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getAllVehicles();
+  }, []);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1>List of vehicles below</h1>
-        <button onClick={getAllVehicles}>All vehicles</button>
-        {vehicles.length === 0 ? (
-          <div>Loading...</div>
-        ) : (
-          <List items={vehicles}/>
-        )}
-      </main>
+    <div className="container mx-auto p-4 top-3">            
+      <SearchBar getAllVehicles={getAllVehicles} getVehicleById={getVehicleById} setVehicles={setVehicles} />
+    
+      <h1>List of vehicles below</h1>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <List items={vehicles} />
+      )}
     </div>
   );
 }
