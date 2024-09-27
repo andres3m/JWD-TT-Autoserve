@@ -37,32 +37,30 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const handleSearch = async () => {
     const { id, make, model, year, fuel_type, transmission } = searchParams;
 
-      //Perform a general search/filter
-      const response = await fetch("/api/vehicles");
-      if (response.ok) {
-        const data: Vehicle[] = await response.json();
-        const filteredVehicles = data.filter((vehicle) => {
-          return (
-            (id ? vehicle.id === parseInt(id) : true) &&
-            (make
-              ? vehicle.make.toLowerCase().includes(make.toLowerCase())
-              : true) &&
-            (model
-              ? vehicle.model.toLowerCase().includes(model.toLowerCase())
-              : true) &&
-            (year ? vehicle.year === parseInt(year) : true) &&
-            (fuel_type
-              ? vehicle.fuel_type.toLowerCase() === fuel_type.toLowerCase()
-              : true) &&
-            (transmission
-              ? vehicle.transmission.toLowerCase() ===
-                transmission.toLowerCase()
-              : true)
-          );
-        });
-        setVehicles(filteredVehicles);
-      }
-    
+    //Perform a general search/filter
+    const response = await fetch("/api/vehicles");
+    if (response.ok) {
+      const data: Vehicle[] = await response.json();
+      const filteredVehicles = data.filter((vehicle) => {
+        return (
+          (id ? vehicle.id === parseInt(id) : true) &&
+          (make
+            ? vehicle.make.toLowerCase().includes(make.toLowerCase())
+            : true) &&
+          (model
+            ? vehicle.model.toLowerCase().includes(model.toLowerCase())
+            : true) &&
+          (year ? vehicle.year === parseInt(year) : true) &&
+          (fuel_type
+            ? vehicle.fuel_type.toLowerCase() === fuel_type.toLowerCase()
+            : true) &&
+          (transmission
+            ? vehicle.transmission.toLowerCase() === transmission.toLowerCase()
+            : true)
+        );
+      });
+      setVehicles(filteredVehicles);
+    }
   };
 
   const handleReset = async () => {
@@ -78,16 +76,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <div className="container">
-      <div className="sticky flex flex-row justify-end gap-8">
-        <div>
+    <div className="bg-blue-500">
+      <div className="sticky flex flex-row justify-between">
+        <div className="bg-green-500 grid grid-cols-3 min-w-max">
           <input
             type="text"
             name="id"
             value={searchParams.id}
             placeholder="Vehicle ID"
             onChange={handleChange}
-            className=""
+            className="bg-red-500 "
           />
           <input
             type="text"
@@ -128,23 +126,26 @@ const SearchBar: React.FC<SearchBarProps> = ({
             placeholder="Transmission"
             onChange={handleChange}
             className="input-field"
-          />          
+          />
         </div>
+      <div className="gap-2">
+        <div><button onClick={handleSearch} className="btn-search bg-pink-600">
+          Search
+        </button></div>
+        <div><button onClick={handleReset} className="btn-reset bg-pink-600">
+          Reset
+        </button></div>
+      </div>
+        <div>
         <Image
           src="/autoserve-logo.png"
           alt="Autoserve logo"
           width={192}
           height={32.5}
           priority
-        />
+          
+        /></div>
       </div>
-      <button onClick={handleSearch} className="btn-search">
-        Search
-      </button>
-      <br />
-      <button onClick={handleReset} className="btn-reset">
-        Reset
-      </button>
     </div>
   );
 };

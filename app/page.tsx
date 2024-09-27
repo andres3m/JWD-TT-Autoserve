@@ -53,8 +53,8 @@ export default function Home() {
     getAllVehicles();
   }, []);
 
-  return (
-    <div className="container mx-auto p-4 top-3">            
+  return (    
+	<div className="mx-auto p-4 top-3">
       <SearchBar getAllVehicles={getAllVehicles} getVehicleById={getVehicleById} setVehicles={setVehicles} />
     
       <h1>List of vehicles below</h1>

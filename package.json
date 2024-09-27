@@ -16,6 +16,7 @@
 	"dependencies": {
 		"@prisma/client": "^5.19.1",
 		"next": "14.2.13",
+		"prettier-plugin-tailwindcss": "^0.6.8",
 		"react": "^18",
 		"react-dom": "^18"
 	},
