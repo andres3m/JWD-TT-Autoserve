@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { Vehicle } from "@prisma/client";
 import VehicleCard from "./components/VehicleCard";
+import { ThreeDots } from "react-loader-spinner";
+import Image from "next/image";
 
 export default function Home() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // State for multi-attribute search
   const [make, setMake] = useState<string>("");
@@ -56,9 +58,9 @@ export default function Home() {
   // Handle Search by ID
   const handleSearchById = () => {
     const id = parseInt(searchById, 10);
+    setVehicles([]);
     if (!isNaN(id)) {
       setLoading(true);
-      setVehicles([]);
       getVehicleById(id);
     } else {
       console.error("Please enter a valid vehicle ID.");
@@ -68,7 +70,6 @@ export default function Home() {
   // Filter vehicles based on multiple attributes
   const filterVehicles = async () => {
     setLoading(true);
-    setVehicles([]);
 
     // Fetch all vehicles and store them in a temporary variable for filtering
     let allVehicles: Vehicle[] = [];
@@ -131,21 +132,36 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Vehicle Inventory</h1>
+      <div className="flex flex-col-reverse sm:flex-row justify-between pb-4">
+        <h1 className="place-self-center text-2xl font-bold">
+          Vehicle Inventory
+        </h1>
+        <Image
+          className="place-self-center pb-2 justify-end sm:pb-0"
+          src="/autoserve-logo.png"
+          alt="Autoserve logo"
+          width={192}
+          height={32.5}
+          priority
+        />
+      </div>
 
       {/* Search by ID */}
-      <div className="mb-4">
-        <label className="block mb-2">Search by ID</label>
+      <div className="pb-2">
+        {/* <label className="block mb-2">Search by ID</label> */}
+
         <input
           type="text"
           value={searchById}
           onChange={(e) => setSearchById(e.target.value)}
-          className="border p-2 rounded w-full mb-2"
-          placeholder="Enter Vehicle ID"
+          // className="border p-2 rounded w-2/12 mb-2"
+          className="border rounded p-2 mb-2 w-24"
+          placeholder="Vehicle ID"
         />
+
         <button
           onClick={handleSearchById}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white center px-4 py-2 rounded ml-2"
         >
           Search by ID
         </button>
@@ -154,73 +170,85 @@ export default function Home() {
       {/* Search by Attributes */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
         <div>
-          <label className="block mb-2">Make</label>
+          {/* <label className="block mb-2">Make</label> */}
           <input
             type="text"
             value={make}
             onChange={(e) => setMake(e.target.value)}
             className="border p-2 rounded w-full"
-            placeholder="Toyota, Ford, Mercedes..."
+            // placeholder="Toyota, Ford, Mercedes..."
+            placeholder="Make: Toyota, Ford..."
           />
         </div>
         <div>
-          <label className="block mb-2">Model</label>
+          {/* <label className="block mb-2">Model</label> */}
           <input
             type="text"
             value={model}
             onChange={(e) => setModel(e.target.value)}
             className="border p-2 rounded w-full"
-            placeholder="Mustang, Civic, Corolla..."
+            // placeholder="Mustang, Civic, Corolla..."
+            placeholder="Model"
           />
         </div>
         <div>
-          <label className="block mb-2">Year</label>
+          {/* <label className="block mb-2">Year</label> */}
           <input
             type="number"
             value={year}
             onChange={(e) => setYear(e.target.valueAsNumber)}
+            min={2000}
             className="border p-2 rounded w-full"
-            placeholder="2020"
+            // placeholder="2020"
+            placeholder="Year"
           />
         </div>
         <div>
-          <label className="block mb-2">Fuel Type</label>
+          {/* <label className="block mb-2">Fuel Type</label> */}
           <input
             type="text"
             value={fuelType}
             onChange={(e) => setFuelType(e.target.value)}
             className="border p-2 rounded w-full"
-            placeholder="Petrol, diesel, electric..."
+            // placeholder="Petrol, diesel, electric..."
+            placeholder="Fuel Type: Petrol, diesel..."
           />
         </div>
         <div>
-          <label className="block mb-2">Transmission</label>
+          {/* <label className="block mb-2">Transmission</label> */}
           <input
             type="text"
             value={transmission}
             onChange={(e) => setTransmission(e.target.value)}
             className="border p-2 rounded w-full"
-            placeholder="Manual / Automatic"
+            // placeholder="Manual / Automatic"
+            placeholder="Transmission: Manual / Auto"
           />
         </div>
         <div>
-          <label className="block mb-2">Mileage (Max)</label>
+          {/* <label className="block mb-2">Mileage (Max)</label> */}
           <input
             type="number"
             value={mileage}
             onChange={(e) => setMileage(e.target.valueAsNumber)}
+            min={0}
+            step={5000}
             className="border p-2 rounded w-full"
-            placeholder="Enter Maximum Mileage"
+            // placeholder="Enter Maximum Mileage"
+            placeholder="Maximum Mileage"
           />
         </div>
         <div>
-          <label className="block mb-2">Price (Max)</label>
+          {/* <label className="block mb-2">Price (Max)</label> */}
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.valueAsNumber)}
+            min={0}
+            step={5000}
             className="border p-2 rounded w-full"
-            placeholder="Enter Maximum Price"
+            // placeholder="Enter Maximum Price"
+            placeholder="Maximum Price"
           />
         </div>
 
@@ -233,7 +261,7 @@ export default function Home() {
 
         <button
           onClick={clearInputs}
-          className="bg-red-500 text-white px-4 py-2 rounded"
+          className="bg-amber-400 text-white px-4 py-2 rounded"
         >
           Clear All
         </button>
@@ -241,13 +269,25 @@ export default function Home() {
 
       {/* Display Vehicles */}
       {loading ? (
-        <div>Loading...</div>
+        <div className="flex justify-center">
+          <ThreeDots
+            visible={true}
+            height="80"
+            width="80"
+            color="#8d97b1"
+            radius="9"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
       ) : (
-        <div>
+        <div className="flex justify-center">
           {vehicles.length === 0 ? (
-            <p>No vehicles found.</p>
+            <p className="mt-4">No vehicles found.</p>
           ) : (
-            <div className="grid grid-cols-1">
+            // <div className="grid grid-cols-1 min-w-60 max-w-64 justify-center">
+            <div className="flex flex-wrap justify-center gap-2">
               {vehicles.map((vehicle) => (
                 <VehicleCard key={vehicle.id} vehicle={vehicle} />
               ))}
