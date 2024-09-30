@@ -66,6 +66,7 @@ export default function Home() {
       alert("Please enter a valid vehicle ID.");
       clearInputs();
     }
+    setLoading(false);
   };
 
   // Filter vehicles based on multiple attributes
@@ -150,13 +151,10 @@ export default function Home() {
       
       {/* Search by ID */}
       <div className="flex flex-row justify-center pb-2">
-        {/* <label className="block mb-2">Search by ID</label> */}
-
         <input
           type="number"
           value={searchById}
           onChange={(e) => setSearchById(e.target.value)}
-          // className="border p-2 rounded w-2/12 mb-2"
           className="font-medium border rounded p-2 mb-2 w-28 h-10"
           placeholder="Vehicle ID"
         />
@@ -172,31 +170,26 @@ export default function Home() {
       {/* Search by Attributes */}
       <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <div>
-          {/* <label className="block mb-2">Make</label> */}
           <input
             type="text"
             value={make}
             maxLength={20}
             onChange={(e) => setMake(e.target.value)}
             className="border p-2 rounded w-full"
-            // placeholder="Toyota, Ford, Mercedes..."
             placeholder="Make: Toyota, Ford..."            
           />
         </div>
         <div>
-          {/* <label className="block mb-2">Model</label> */}
           <input
             type="text"
             value={model}
             maxLength={20}
             onChange={(e) => setModel(e.target.value)}
             className="border p-2 rounded w-full"
-            // placeholder="Mustang, Civic, Corolla..."
             placeholder="Model: Corolla, Mondeo..."
           />
         </div>
         <div>
-          {/* <label className="block mb-2">Year</label> */}
           <input
             type="number"
             value={year}
@@ -204,36 +197,30 @@ export default function Home() {
             min={2000}
             step={2}
             className="border p-2 rounded w-full"
-            // placeholder="2020"
-            placeholder="Year"
+            placeholder="Year:"
           />
         </div>
         <div>
-          {/* <label className="block mb-2">Fuel Type</label> */}
           <input
             type="text"
             value={fuelType}
             maxLength={15}
             onChange={(e) => setFuelType(e.target.value)}
             className="border p-2 rounded w-full"
-            // placeholder="Petrol, diesel, electric..."
-            placeholder="Fuel Type: Petrol, diesel..."
+            placeholder="Fuel Type: Petrol, Diesel..."
           />
         </div>
         <div>
-          {/* <label className="block mb-2">Transmission</label> */}
           <input
             type="text"
             value={transmission}
             maxLength={15}
             onChange={(e) => setTransmission(e.target.value)}
             className="border p-2 rounded w-full"
-            // placeholder="Manual / Automatic"
-            placeholder="Transmission: Manual, Auto"
+            placeholder="Transmission: Manual, Automatic"
           />
         </div>
         <div>
-          {/* <label className="block mb-2">Mileage (Max)</label> */}
           <input
             type="number"
             value={mileage}
@@ -241,12 +228,10 @@ export default function Home() {
             min={0}
             step={5000}
             className="border p-2 rounded w-full"
-            // placeholder="Enter Maximum Mileage"
             placeholder="Maximum Mileage"
           />
         </div>
         <div>
-          {/* <label className="block mb-2">Price (Max)</label> */}
           <input
             type="number"
             value={price}
@@ -254,7 +239,6 @@ export default function Home() {
             min={0}
             step={5000}
             className="border p-2 rounded w-full"
-            // placeholder="Enter Maximum Price"
             placeholder="Maximum Price"
           />
       </div>
@@ -295,7 +279,6 @@ export default function Home() {
           {vehicles.length === 0 ? (
             <p className="mt-4">No vehicles found.</p>
           ) : (
-            // <div className="grid grid-cols-1 min-w-60 max-w-64 justify-center">
             <div className="flex flex-wrap justify-center gap-2">
               {vehicles.map((vehicle) => (
                 <VehicleCard key={vehicle.id} vehicle={vehicle} />
