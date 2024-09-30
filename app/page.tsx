@@ -198,7 +198,7 @@ export default function Home() {
             min={2000}            
             step={1}
             className="border p-2 rounded w-full"
-            placeholder="Year:"
+            placeholder="Year"
           />
         </div>
         <div>
