@@ -55,11 +55,25 @@ export default function Home() {
     }
   };
 
+  const clearInputs = () => {
+    setMake("");
+    setModel("");
+    setYear("");
+    setFuelType("");
+    setTransmission("");
+    setMileage("");
+    setPrice("");
+    setSearchById("");
+    // Get all vehicles with all filters cleared
+    getAllVehicles();
+  };
+
+
   // Handle Search by ID
   const handleSearchById = () => {
     const id = parseInt(searchById, 10);
     setVehicles([]);
-    if (id > 0) {
+    if (typeof id === 'number' && id > 0 && Number.isInteger(id)) {
       setLoading(true);
       getVehicleById(id);
     } else {
@@ -115,19 +129,6 @@ export default function Home() {
     setLoading(false);
   };
 
-  const clearInputs = () => {
-    setMake("");
-    setModel("");
-    setYear("");
-    setFuelType("");
-    setTransmission("");
-    setMileage("");
-    setPrice("");
-    setSearchById("");
-    // Get all vehicles with all filters cleared
-    getAllVehicles();
-  };
-
   // Get all vehicles on page load
   useEffect(() => {
     getAllVehicles();
@@ -161,7 +162,7 @@ export default function Home() {
 
         <button
           onClick={handleSearchById}
-          className="bg-blue-500 text-white font-semibold px-4 py-2 rounded ml-2 h-10"
+          className="bg-blue-600 text-white font-semibold px-4 py-2 rounded ml-2 h-10"
         >
           Search by ID
         </button>
@@ -194,8 +195,8 @@ export default function Home() {
             type="number"
             value={year}
             onChange={(e) => setYear(e.target.valueAsNumber)}
-            min={2000}
-            step={2}
+            min={2000}            
+            step={1}
             className="border p-2 rounded w-full"
             placeholder="Year:"
           />
@@ -248,7 +249,7 @@ export default function Home() {
           type="submit"
           onClick={filterVehicles}
         >
-          Search by Attributes
+          Search
         </button>
 
         <button
@@ -279,7 +280,7 @@ export default function Home() {
           {vehicles.length === 0 ? (
             <p className="mt-4">No vehicles found.</p>
           ) : (
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-2 w-full">
               {vehicles.map((vehicle) => (
                 <VehicleCard key={vehicle.id} vehicle={vehicle} />
               ))}

@@ -9,11 +9,11 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className=" flex flex-col gap-2 content-center border p-2 rounded-lg shadow-md cursor-pointer w-full sm:flex-row" onClick={() => setIsExpanded(!isExpanded)}>
+    <div className="bg-white flex flex-col gap-2 content-center border p-2 rounded-lg shadow-md cursor-pointer w-full sm:flex-row" onClick={() => setIsExpanded(!isExpanded)}>
       <p className="font-bold">
         {vehicle.make} {vehicle.model} ({vehicle.year})
       </p>
-      <p className="text-gray-700">
+      <p>
         <strong>Price:</strong> £{vehicle.price.toLocaleString()}
       </p>
 
