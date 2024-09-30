@@ -62,18 +62,18 @@ To
 ```
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 ```
-5. Run npx prisma generate
+5. Run "npx prisma generate" to create a JavaScript client to interact with your database. It should be runned every time you make changes to your Prisma schema or when setting up the Prisma Client for the first time.
 ```
 npx prisma generate
 ```
-6. Run the SQL seed to create local db
-```
-npx prisma db seed
-```
-7. Run the app
+6. Run the app
 ```
 npm run dev
+```
+6. If no vehicles are displayed run the database seed to populate the database with test data and try again.
+```
+npx prisma db seed
 ```
