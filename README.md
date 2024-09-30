@@ -49,7 +49,31 @@ git clone https://github.com/andres3m/JWD-Tech-Test-Autoserve.git
 ```
 npm i
 ```
-4. Run the app
+4. Update JWD-TT-Back-End\prisma\schema.prisma file to have SQLite provider:
+
+From
+```
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
+To
+```
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+```
+5. Run npx prisma generate
+```
+npx prisma generate
+```
+6. Run the SQL seed to create local db
+```
+npx prisma db seed
+```
+7. Run the app
 ```
 npm run dev
 ```
