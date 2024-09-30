@@ -59,11 +59,12 @@ export default function Home() {
   const handleSearchById = () => {
     const id = parseInt(searchById, 10);
     setVehicles([]);
-    if (!isNaN(id)) {
+    if (id > 0) {
       setLoading(true);
       getVehicleById(id);
     } else {
-      console.error("Please enter a valid vehicle ID.");
+      alert("Please enter a valid vehicle ID.");
+      clearInputs();
     }
   };
 
@@ -122,6 +123,7 @@ export default function Home() {
     setMileage("");
     setPrice("");
     setSearchById("");
+    // Get all vehicles with all filters cleared
     getAllVehicles();
   };
 
@@ -145,39 +147,40 @@ export default function Home() {
           priority
         />
       </div>
-
+      
       {/* Search by ID */}
-      <div className="pb-2">
+      <div className="flex flex-row justify-center pb-2">
         {/* <label className="block mb-2">Search by ID</label> */}
 
         <input
-          type="text"
+          type="number"
           value={searchById}
           onChange={(e) => setSearchById(e.target.value)}
           // className="border p-2 rounded w-2/12 mb-2"
-          className="border rounded p-2 mb-2 w-24"
+          className="font-medium border rounded p-2 mb-2 w-28 h-10"
           placeholder="Vehicle ID"
         />
 
         <button
           onClick={handleSearchById}
-          className="bg-blue-500 text-white center px-4 py-2 rounded ml-2"
+          className="bg-blue-500 text-white font-semibold px-4 py-2 rounded ml-2 h-10"
         >
           Search by ID
         </button>
       </div>
 
       {/* Search by Attributes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <div>
           {/* <label className="block mb-2">Make</label> */}
           <input
             type="text"
             value={make}
+            maxLength={20}
             onChange={(e) => setMake(e.target.value)}
             className="border p-2 rounded w-full"
             // placeholder="Toyota, Ford, Mercedes..."
-            placeholder="Make: Toyota, Ford..."
+            placeholder="Make: Toyota, Ford..."            
           />
         </div>
         <div>
@@ -185,10 +188,11 @@ export default function Home() {
           <input
             type="text"
             value={model}
+            maxLength={20}
             onChange={(e) => setModel(e.target.value)}
             className="border p-2 rounded w-full"
             // placeholder="Mustang, Civic, Corolla..."
-            placeholder="Model"
+            placeholder="Model: Corolla, Mondeo..."
           />
         </div>
         <div>
@@ -198,6 +202,7 @@ export default function Home() {
             value={year}
             onChange={(e) => setYear(e.target.valueAsNumber)}
             min={2000}
+            step={2}
             className="border p-2 rounded w-full"
             // placeholder="2020"
             placeholder="Year"
@@ -208,6 +213,7 @@ export default function Home() {
           <input
             type="text"
             value={fuelType}
+            maxLength={15}
             onChange={(e) => setFuelType(e.target.value)}
             className="border p-2 rounded w-full"
             // placeholder="Petrol, diesel, electric..."
@@ -219,10 +225,11 @@ export default function Home() {
           <input
             type="text"
             value={transmission}
+            maxLength={15}
             onChange={(e) => setTransmission(e.target.value)}
             className="border p-2 rounded w-full"
             // placeholder="Manual / Automatic"
-            placeholder="Transmission: Manual / Auto"
+            placeholder="Transmission: Manual, Auto"
           />
         </div>
         <div>
@@ -250,20 +257,22 @@ export default function Home() {
             // placeholder="Enter Maximum Price"
             placeholder="Maximum Price"
           />
-        </div>
+      </div>
 
         <button
+          className="flex place-self-center justify-center bg-green-500 text-white font-semibold px-4 py-2 rounded w-full"
+          type="submit"
           onClick={filterVehicles}
-          className="bg-green-500 text-white px-4 py-2 rounded"
         >
           Search by Attributes
         </button>
 
         <button
+          className="flex place-self-center justify-center bg-amber-400 text-white font-semibold px-4 py-2 rounded w-full"
+          type="reset"
           onClick={clearInputs}
-          className="bg-amber-400 text-white px-4 py-2 rounded"
         >
-          Clear All
+          Clear All Filters
         </button>
       </div>
 
