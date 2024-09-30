@@ -4,7 +4,7 @@
 
 Full-stack app that retrieves and displays vehicle details via API calls. 
 
-Available functionality to search by id and search by car specs:
+Search by id and by car specs:
 - Make
 - Model
 - Year
@@ -17,7 +17,7 @@ Tech stack:
 Frontend:
 - React (hooks and functional components)
 - Tailwind CSS
-- React-loader-spinner
+- React-loader-spinner (for loading indicator)
 
 Backend:
 - Next.js
@@ -31,7 +31,7 @@ Deployment: Vercel
 
 #### **Instructions**
 
-Try the app in the deployed site: https://jwd-tt-autoserve.vercel.app/
+Check the deployed app out: https://jwd-tt-autoserve.vercel.app/
 
 or
 
