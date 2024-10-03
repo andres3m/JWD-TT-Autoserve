@@ -1,6 +1,6 @@
-### Vehicle Inventory App 🚘
+## Vehicle Inventory App 🚘
 
-#### **Description**
+### **🔵Description**
 
 Full-stack app that retrieves and displays vehicle details via API calls. 
 
@@ -29,7 +29,8 @@ Database: Postgresql hosted in Elephant.sql for production and SQL Lite for dev 
 Deployment: Vercel
 
 
-#### **Instructions**
+
+### **🟢Instructions**
 
 Check the deployed app out: https://jwd-tt-autoserve.vercel.app/
 
@@ -77,3 +78,5 @@ npm run dev
 ```
 npx prisma db seed
 ```
+
+
